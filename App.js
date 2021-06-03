@@ -1,13 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import Header from './components/header';
+
 export default function App() {
 
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
+
+  // call the rick & morty api and set the data with the json.results
   useEffect(() => {
     fetch('https://rickandmortyapi.com/api/character')
       .then((response) => response.json())
@@ -16,6 +18,7 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  // give the right style name to the render using the item.status
   const colorStatus= (item, style) => {
     let color = "";
     switch (item) {
@@ -35,30 +38,34 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-    <Header
-        center={<Text style={{ color: '#7CBC6C', fontSize: 20 }} >Rick & Morty</Text>}
-      />
+    // use the header component
+      <Header
+          center={<Text style={{ color: '#7CBC6C', fontSize: 20 }} >Rick & Morty</Text>}
+        />
       
       {isLoading ? <ActivityIndicator/> : (
         <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-      <View style={styles.card}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: item.image}}
-        />
-        <View style={styles.infos}>
-          <Text style={styles.name}>{item.name} </Text>
-          <Text style={styles.details}><View style={colorStatus(item.status, styles)}></View>  {item.status} - {item.species}</Text>
-          <Text style={styles.details}>Gendre: {item.gender}</Text>
-          <Text style={styles.details}>Origin:  {item.location.name}</Text>
+            <View style={styles.card}>
+              <Image
+                style={styles.image}
+                source={{
+                  uri: item.image}}
+              />
+              <View style={styles.infos}>
+                <Text style={styles.name}>{item.name} </Text>
+                <Text style={styles.details}>
+                  <View style={colorStatus(item.status, styles)}>
+                    
+                  </View>  {item.status} - {item.species}</Text>
+                <Text style={styles.details}>Gendre: {item.gender}</Text>
+                <Text style={styles.details}>Origin:  {item.location.name}</Text>
 
-        </View>
-      </View>
-      )}
+              </View>
+            </View>
+          )}
         />
       )}
     </View>
@@ -69,7 +76,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-    // justifyContent: 'center',
   },
   card: {
     flexDirection:"row",
