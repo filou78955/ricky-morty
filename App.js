@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import Header from './components/header';
-
 export default function App() {
 
 
@@ -38,7 +37,6 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-    // use the header component
       <Header
           center={<Text style={{ color: '#7CBC6C', fontSize: 20 }} >Rick & Morty</Text>}
         />
